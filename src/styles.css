@@ -1,0 +1,23 @@
+/* You can add global styles to this file, and also import other style files */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body{
+    font-family: 'Poppins',sans-serif;
+    box-sizing: border-box;
+}
+
+.customButton{
+    border-radius: 50px;
+    background: #7f2f2f;
+    box-shadow:  27px 27px 54px #471a1a,
+                 -27px -27px 54px #b74444;}
+
+button{
+    transition: 0.3s ease-in-out;
+}
+button:hover{
+    /* opacity: 0.85; */
+    scale:0.98;
+}
