@@ -1,0 +1,17 @@
+.height{
+    height: calc(100vh - 81px);
+}
+
+.shadow{
+    box-shadow: 0px 0px 2px rgba(192, 190, 190, 0.473);
+}
+
+::-webkit-scrollbar{
+    width: 4px;
+}
+::-webkit-scrollbar-thumb{
+    background:rgb(192, 190, 190);
+}
+::-webkit-scrollbar-track{
+    background:rgba(192, 190, 190, 0.473);
+}

@@ -1,20 +1,96 @@
-<div class="bg-white h-[81px] w-full shadow-sm sticky top-0 left-0">
+<div class="bg-white h-[81px] w-full shadow-sm sticky top-0 left-0 z-50">
   <div
     class="w-[1300px] h-full mx-auto max-w-full flex items-center justify-between px-4 gap-1"
   >
-    <img src="../../assets/Logo.svg" alt="" />
+    <a routerLink="/"><img src="../../assets/Logo.svg" alt="FashionFlow" /></a>
     <div
       class="hidden md-900:flex gap-5 font-semibold opacity-60 text-[14px] items-center"
     >
-      <span>Home</span><span>Shop</span><span>Women</span><span>Men</span
-      ><span>Accessories</span><span>About Us</span><span>Contact Us</span
-      ><span>Blog</span>
+      <a
+        routerLink="/"
+        routerLinkActive="underline"
+        [routerLinkActiveOptions]="{ exact: true }"
+        >Home</a
+      >
+      <a routerLink="/shop" routerLinkActive="underline">Shop</a>
+      <span>About Us</span>
+      <span>Contact Us</span>
     </div>
-    <div class="flex gap-5 items-center">
-      <i class="bi bi-search text-[18px]"></i>
-      <i class="bi bi-heart text-[18px]"></i>
-      <i class="bi bi-handbag text-[18px]"></i>
-      <i class="bi bi-person text-[20px]"></i>
+    <div class="flex gap-3 md:gap-5 items-center">
+      <!-- <i class="bi bi-search text-[18px]"></i> -->
+      <i
+        class="bi bi-heart text-[18px] cursor-pointer"
+        title="WishList"
+        (click)="toWishList()"
+      ></i>
+      <div class="relative">
+        <i
+          class="bi bi-handbag text-[18px] cursor-pointer"
+          title="Shopping Cart"
+          (click)="toCart()"
+        ></i>
+        <div
+          class="bg-[#1b2834] px-1 h-[20px] min-w-[20px] flex items-center justify-center absolute -top-3 -right-3 rounded-full text-white text-[12px]"
+          *ngIf="productsLength > 0"
+        >
+          {{ productsLength }}
+        </div>
+      </div>
+      <div class="relative">
+        <i
+          class="bi bi-person text-[20px] cursor-pointer"
+          title="My Account"
+          (click)="showUser = !showUser"
+        ></i>
+        <div
+          class="absolute top-7 right-0 border px-2 py-1 bg-white rounded-md flex flex-col gap-2 text-[14px] w-[100px] items-center transition duration-300 origin-top-left z-50"
+          [ngClass]="{
+            'scale-0; opacity-0': !showUser,
+            'scale-100;opacity-100': showUser
+          }"
+        >
+          <span class="cursor-pointer opacity-70">Login</span>
+          <hr class="w-full" />
+          <span class="cursor-pointer opacity-70">Account</span>
+          <hr class="w-full" />
+          <span class="cursor-pointer opacity-70" (click)="toWishList()"
+            >WishList</span
+          >
+        </div>
+      </div>
+      <i
+        class="bi bi-list text-xl flex md-900:hidden"
+        (click)="showSideBar = !showSideBar"
+      ></i>
     </div>
   </div>
+</div>
+<!-- SideBar -->
+<div
+  class="fixed top-0 right-0 w-[200px] md:w-[300px] bg-secondary h-screen z-50 shadow px-5 md:px-10 py-10 transition ease-in-out duration-300 visible md-900:hidden"
+  [ngClass]="{
+    'translate-x-0': showSideBar,
+    'translate-x-full': !showSideBar
+  }"
+>
+  <div
+    class="absolute top-5 right-4 text-3xl text-white cursor-pointer"
+    (click)="showSideBar = !showSideBar"
+  >
+    &times;
+  </div>
+  <ul class="space-y-14 text-base md:text-[18px] text-white font-semibold mt-5">
+    <li (click)="showSideBar = !showSideBar" class="space-x-2">
+      <i class="bi bi-house-door-fill"></i><a routerLink="/">Home</a>
+    </li>
+    <li (click)="showSideBar = !showSideBar" class="space-x-2">
+      <i class="bi bi-bag-fill"></i><a routerLink="/shop">Shop</a>
+    </li>
+    <li (click)="showSideBar = !showSideBar" class="space-x-2">
+      <i class="bi bi-info-circle-fill"></i><a href="#">About Us</a>
+    </li>
+    <li (click)="showSideBar = !showSideBar" class="space-x-2">
+      <i class="bi bi-telephone-fill"></i><a href="#">Contact Us</a>
+    </li>
+  </ul>
 </div>

@@ -1,42 +1,303 @@
 <div>
-  <div class="height bg-primary">
+  <div
+    class="md:min-h-height-minus-hundred bg-primary flex items-center justify-center"
+  >
     <div
-      class="w-[1400px] max-w-full mx-auto px-3 flex items-center justify-between"
+      class="w-[1250px] max-w-full mx-auto px-3 flex flex-wrap md-1100:flex-nowrap items-center justify-center md:justify-between pt-5 md-1100:py-0"
     >
-      <div class="flex flex-col gap-5 md-900:basis-[60%]">
+      <div
+        class="flex flex-col gap-5 md-1200:gap-10 md-1100:basis-[60%] py-10 md:py-5"
+      >
         <div
           class="p-2 bg-white rounded-3xl flex items-center gap-2 w-fit px-5"
         >
           <img
-            src="https://dhws-production.s3.ap-south-1.amazonaws.com/60d476bc92d3a3001575d2ee/60d47a1992d5640016253693/66320af44f314e001700438f/appSource/images/img_icon_blue_gray_900_01.svg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAQODH4IWPZWQNPYGZ%2F20240902%2Fap-south-1%2Fs3%2Faws4_request&X-Amz-Date=20240902T183013Z&X-Amz-Expires=25200&X-Amz-Signature=e1eead7682b8e1ba0a7b018cc078a7e5b8414deae60ee019d2c2ab215d963c01&X-Amz-SignedHeaders=host"
+            src="../../../assets/discount.svg"
             alt=""
+            class="w-[15px] md:w-auto"
           />
-          <span class="text-[22px] font-bold"
+          <span class="text-xs md:text-[22px] font-bold"
             >Enjoy 50% OFF in Our Summer Super Sale!</span
           >
         </div>
-        <h1 class="text-[52px] font-bold text-[#1b2834]">
+        <h1 class="text-[36px] md:text-[52px] font-bold text-[#1b2834]">
           Step into Fashion at Your <br />
           Ultimate Style Destination!
         </h1>
-        <p class="text-[18px] opacity-75 leading-relaxed">
+        <p class="text-[16px] md:text-[18px] opacity-75 leading-[1.8]">
           Explore a World of Fashion Possibilities with Exclusive Discounts -
           Dive into Your Ultimate Style Destination and Elevate Your Wardrobe
           Today!
         </p>
         <button
-          class="bg-secondary self-start text-white px-7 py-3 rounded-md font-semibold flex items-center gap-2 group"
+          class="bg-secondary self-start text-white px-5 md:px-7 py-2 md:py-3 rounded-md font-semibold flex items-center gap-2 group"
+          (click)="goToShop()"
         >
           Shop Now<i
             class="bi bi-arrow-right transition duration-300 ease-in-out group-hover:translate-x-2"
           ></i>
         </button>
       </div>
-      <img
-        src="https://dhws-production.s3.ap-south-1.amazonaws.com/60d476bc92d3a3001575d2ee/60d47a1992d5640016253693/66320af44f314e001700438f/appSource/images/img_close_up_portra.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAQODH4IWPZWQNPYGZ%2F20240902%2Fap-south-1%2Fs3%2Faws4_request&X-Amz-Date=20240902T183013Z&X-Amz-Expires=25200&X-Amz-Signature=3c978839e01c6d4f1906754c263c69026f945e8992a7f49c534e9ffc46ca1db2&X-Amz-SignedHeaders=host"
-        alt="E-commerce"
-        class="height md-900:basis-[35%] object-contain"
-      />
+      <div
+        class="hidden sm-500:flex md:flex justify-center basis-[100%] md-1100:basis-[35%]"
+      >
+        <img
+          src="../../../assets/Header.png"
+          alt="E-commerce"
+          class="w-[50%] md-1100:w-full object-contain"
+        />
+      </div>
+    </div>
+  </div>
+  <div
+    class="flex items-center flex-wrap justify-between gap-5 md:gap-2 w-[1200px] max-w-full mx-auto px-10 md:px-3 my-10 md:my-20"
+  >
+    <div class="flex gap-2">
+      <i class="bi bi-truck text-2xl"></i>
+      <div class="flex flex-col gap-1">
+        <h1 class="font-semibold md:text-xl">Free Shipping</h1>
+        <p class="opacity-70 text-xs md:text-base">
+          Free Shipping for order above $180
+        </p>
+      </div>
+    </div>
+    <div class="flex gap-2">
+      <i class="bi bi-cash text-2xl"></i>
+      <div class="flex flex-col gap-1">
+        <h1 class="font-semibold md:text-xl">Flexible Payment</h1>
+        <p class="opacity-70 text-xs md:text-base">
+          Multiple secure payment options
+        </p>
+      </div>
+    </div>
+    <div class="flex gap-2">
+      <i class="bi bi-info-circle text-2xl"></i>
+      <div class="flex flex-col gap-1">
+        <h1 class="font-semibold md:text-xl">24/7 Support</h1>
+        <p class="opacity-70 text-xs md:text-base">
+          We Support Online all days
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="w-[1250px] max-w-full mx-auto px-5 md:px-3 space-y-2">
+    <h3 class="text-[18px] font-semibold opacity-75">Our Products</h3>
+    <h1 class="text-[30px] font-bold">Our Bestselling Products</h1>
+    <div class="flex gap-2 md:gap-5">
+      <div
+        class="w-[130px] py-2 md:py-3 border rounded-md text-center cursor-pointer"
+        [ngClass]="{ 'bg-secondary text-white': cat === '' }"
+        (click)="cat = ''; filterProduct()"
+      >
+        All
+      </div>
+      <div
+        class="w-[130px] py-2 md:py-3 border rounded-md text-center cursor-pointer"
+        [ngClass]="{ 'bg-secondary text-white': cat === 'Men' }"
+        (click)="cat = 'Men'; filterProduct()"
+      >
+        Men
+      </div>
+      <div
+        class="w-[130px] py-2 md:py-3 border rounded-md text-center cursor-pointer"
+        [ngClass]="{ 'bg-secondary text-white': cat === 'Women' }"
+        (click)="cat = 'Women'; filterProduct()"
+      >
+        Women
+      </div>
+      <div
+        class="w-[130px] py-2 md:py-3 border rounded-md text-center cursor-pointer"
+        [ngClass]="{ 'bg-secondary text-white': cat === 'Kids' }"
+        (click)="cat = 'Kids'; filterProduct()"
+      >
+        Kids
+      </div>
+    </div>
+    <!-- <div
+      class="grid grid-cols-1 md:grid-cols-2 md-1100:grid-cols-3 gap-5 md:gap-2 place-items-center py-5"
+    > -->
+    <div
+      class="flex items-center justify-center py-5 md-1200:justify-between gap-3 md:gap-4 md-1200:gap-7 flex-wrap"
+    >
+      <app-home-page-cards
+        *ngFor="let item of mostSellingFiltered"
+        [currentProduct]="item"
+      ></app-home-page-cards>
+    </div>
+  </div>
+  <div class="bg-primary w-full my-10">
+    <div
+      class="w-[1200px] max-w-full mx-auto px-4 flex items-center justify-between flex-col-reverse md-1100:flex-row pt-4 md-1100:pt-0"
+    >
+      <div class="hidden md:block w-[50%]">
+        <img src="../../../assets/img_young_women_pos.png" alt="" />
+      </div>
+      <div class="md-1100:w-[50%] space-y-4 md:space-y-6 py-5 md:py-0">
+        <div class="text-[14px] md:text-[22px] font-bold">
+          Limited Time Offers
+        </div>
+        <h1 class="text-[30px] md:text-[48px] font-semibold text-[#1b2834]">
+          Get 50% Off All Fashion - Limited Time Offer!
+        </h1>
+        <p class="text-[16px] md:text-[18px] opacity-75 leading-relaxed">
+          Discover Your Signature Look for Less - Enjoy discount All Fashion
+          Items! Limited Time Offer, Act Fast!
+        </p>
+        <button
+          class="bg-secondary self-start text-white px-5 md:px-7 py-2 md:py-3 rounded-md font-semibold flex items-center gap-2 group"
+          (click)="goToShop()"
+        >
+          Shop Now<i
+            class="bi bi-arrow-right transition duration-300 ease-in-out group-hover:translate-x-2"
+          ></i>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div
+    class="w-[1200px] max-w-full mx-auto px-4 flex items-center justify-center md-1200:justify-between flex-wrap md-1200:flex-nowrap my-10 md:my-20 gap-3"
+  >
+    <app-sale-cards>
+      <div class="flex flex-col justify-between h-[80%] gap-3 md:gap-1">
+        <h3 class="text-[12px] md:text-[18px]">Flat 20% Discount</h3>
+        <h1 class="text-[20px] md:text-[30px]">
+          Explore the latest in Men's Fashion
+        </h1>
+        <p class="text-[14px] md:text-base">
+          Step into style unveiling the Newest Trends
+        </p>
+        <button
+          class="bg-[#286fe5] self-start text-white px-3 text-[14px] md:text-base md:px-7 py-2 md:py-3 rounded-md font-semibold flex items-center gap-2 group"
+          (click)="goToShop()"
+        >
+          Shop Now<i
+            class="bi bi-arrow-right transition duration-300 ease-in-out group-hover:translate-x-2"
+          ></i>
+        </button>
+      </div>
+      <div class="sm-500:block h-full w-full">
+        <img
+          src="../../../assets/discount1.png"
+          alt=""
+          class="h-full object-contain w-full"
+        />
+      </div>
+    </app-sale-cards>
+    <app-sale-cards
+      ><div class="flex flex-col justify-between h-[80%] gap-3 md:gap-1">
+        <h3 class="text-[12px] md:text-[18px]">Flat 25% Discount</h3>
+        <h1 class="text-[20px] md:text-[30px]">
+          Discover the Latest in Women's Fashion
+        </h1>
+        <p class="text-[14px] md:text-base">
+          Elevate Your Wardrobe with Trendsetting Styles
+        </p>
+        <button
+          class="bg-[#286fe5] self-start text-white px-3 text-[14px] md:text-base md:px-7 py-2 md:py-3 rounded-md font-semibold flex items-center gap-2 group"
+          (click)="goToShop()"
+        >
+          Shop Now<i
+            class="bi bi-arrow-right transition duration-300 ease-in-out group-hover:translate-x-2"
+          ></i>
+        </button>
+      </div>
+      <div class="block h-full w-full">
+        <img
+          src="../../../assets/discount2.png"
+          alt=""
+          class="h-full object-contain w-full"
+        />
+      </div>
+    </app-sale-cards>
+  </div>
+  <div class="w-[1200px] max-w-full mx-auto px-5 md:px-3 space-y-2 mb-10">
+    <h3 class="text-[18px] font-semibold opacity-75">Today Deals</h3>
+    <h1 class="text-[30px] font-bold">Deals of the Day</h1>
+    <div
+      class="flex items-center justify-center md-1100:justify-between flex-wrap md-1100:flex-nowrap gap-3"
+    >
+      <div
+        class="flex-1 min-w-[350px] max-w-[380px] h-[400px] border rounded-md overflow-hidden cursor-pointer"
+        *ngFor="let item of dealsOfDay"
+        (click)="toShopItem(item.name)"
+      >
+        <img
+          [src]="item.imagePath"
+          [alt]="item.name"
+          class="h-[75%] object-cover w-full object-center"
+        />
+        <div class="p-3">
+          <h2>{{ item.name }}</h2>
+          <div class="flex items-center gap-2 font-semibold">
+            <span class="text-[#908484]">{{ item.brand }}</span>
+            <span class="text-[#908484]"
+              >{{ item.rating }} <i class="bi bi-star-fill text-yellow-400"></i>
+            </span>
+          </div>
+          <div class="flex items-center gap-2">
+            <ins class="text-[18px] font-semibold"
+              >RS. {{ item.discountedPrice }}</ins
+            >
+            <del class="text-[14px]">Rs. {{ item.standardPrice }}</del>
+            <span class="font-semibold text-green-500"
+              >({{ item.discountPercent }})</span
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="w-[1200px] max-w-full mx-auto px-5 md:px-3 my-10 space-y-4">
+    <h3 class="text-[18px] md:text-[20px] font-semibold opacity-75 text-center">
+      News & Blog
+    </h3>
+    <h1 class="text-[30px] font-semibold text-center">
+      Our Latest News & Blogs
+    </h1>
+    <div
+      class="flex justify-center md-1100:justify-between flex-wrap md-1100:flex-nowrap gap-5 md-1100:gap-2"
+    >
+      <div class="space-y-3 flex-1 min-w-[350px] max-w-[400px]">
+        <img
+          src="../../../assets/Trendy.png"
+          alt=""
+          class="w-[380px] h-[306px]"
+        />
+        <div><span>July 23, 2024</span> {{ "  |  " }} <span>H&M</span></div>
+        <h1 class="font-semibold text-[18px]">Trendy fashion</h1>
+        <p class="text-[14px] opacity-75">
+          Trendy fashion represents the latest, most popular styles and trends,
+          constantly evolving to reflect current tastes and preferences.
+        </p>
+      </div>
+      <div class="space-y-3 flex-1 min-w-[350px] max-w-[400px]">
+        <img
+          src="../../../assets/newTrend.png"
+          alt=""
+          class="w-[380px] h-[306px]"
+        />
+        <div><span>July 23, 2024</span> {{ "  |  " }} <span>H&M</span></div>
+        <h1 class="font-semibold text-[18px]">New trend for clothing</h1>
+        <p class="text-[14px] opacity-75">
+          Discover the newest fashion sensations with our latest clothing
+          collection, showcasing cutting-edge designs and captivating styles to
+          elevate your wardrobe.
+        </p>
+      </div>
+      <div class="space-y-3 flex-1 min-w-[350px] max-w-[400px]">
+        <img
+          src="../../../assets/high.png"
+          alt=""
+          class="w-[380px] h-[306px]"
+        />
+        <div><span>July 23, 2024</span> {{ "  |  " }} <span>H&M</span></div>
+        <h1 class="font-semibold text-[18px]">High selling product</h1>
+        <p class="text-[14px] opacity-75">
+          Discover our top-selling product, delivering unmatched quality and
+          style. Renowned for its innovation and durability, it's a must-have
+          for every discerning shopper.
+        </p>
+      </div>
     </div>
   </div>
 </div>

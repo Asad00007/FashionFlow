@@ -1,0 +1,70 @@
+<div class="w-[1200px] max-w-full mx-auto px-4 min-height">
+  <div class="my-5 text-[14px] opacity-70">
+    <a routerLink="/">Home</a> > WishList
+  </div>
+  <h1 class="text-[20px] md:text-[24px] font-bold mb-4">Wishlist</h1>
+  <div
+    class="min-h-[600px] text-center flex items-center justify-center flex-col gap-5 -translate-y-20"
+    *ngIf="allProducts.length === 0"
+  >
+    <img
+      src="../../../assets/online-shopping.png"
+      alt=""
+      class="w-[150px] md:w-[200px]"
+    />
+    <div class="text-center text-[18px] font-semibold opacity-60">
+      No items in Wishlist. Click
+      <a routerLink="/shop" class="underline text-purple-900 mx-1"> here </a> to
+      add now.
+    </div>
+  </div>
+  <div
+    class="flex-1 grid grid-cols-1 sm-600:grid-cols-2 md:grid-cols-2 place-items-center md-1100:place-items-start md-900:grid-cols-3 md-1150:grid-cols-4 gap-3 mb-10"
+    *ngIf="allProducts.length > 0"
+  >
+    <div
+      class="w-[273px] relative cursor-pointer"
+      *ngFor="let item of allProducts"
+      (click)="viewProduct(item.name)"
+    >
+      <div
+        class="absolute top-2 left-2 border p-2 bg-white text-[14px] font-semibold"
+        *ngIf="item.discountedPrice > 0"
+      >
+        {{ item.discountPercent }}
+      </div>
+      <div class="w-[273px] h-[340px] bg-gray-50">
+        <img
+          [src]="
+            item.imagePath ||
+            'https://lh5.googleusercontent.com/proxy/t08n2HuxPfw8OpbutGWjekHAgxfPFv-pZZ5_-uTfhEGK8B5Lp-VN4VjrdxKtr8acgJA93S14m9NdELzjafFfy13b68pQ7zzDiAmn4Xg8LvsTw1jogn_7wStYeOx7ojx5h63Gliw'
+          "
+          alt="Shopping"
+          class="w-full h-full object-cover"
+        />
+      </div>
+      <h1 class="mt-1">{{ item.name }}</h1>
+      <span class="space-x-2 text-[14px]"
+        ><span>{{ item.brand }}</span>
+        <span
+          ><i class="bi bi-star-fill text-yellow-300"></i>
+          {{ item.rating }}</span
+        ></span
+      >
+      <div class="flex items-center gap-2" *ngIf="item.discountedPrice > 0">
+        <ins class="text-[18px] font-semibold"
+          >Rs. {{ item.discountedPrice }}</ins
+        >
+        <del class="text-[14px]">Rs. {{ item.standardPrice }}</del>
+        <span class="font-semibold text-green-500">{{
+          item.discountPercent
+        }}</span>
+      </div>
+      <div class="flex items-center gap-2" *ngIf="item.discountedPrice <= 0">
+        <span class="text-[18px] font-semibold"
+          >Rs. {{ item.standardPrice }}</span
+        >
+      </div>
+    </div>
+  </div>
+</div>

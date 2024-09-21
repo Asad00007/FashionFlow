@@ -1,6 +1,6 @@
 .height{
     height: calc(100vh - 81px);
 }
-/* .min-height{
+.min-height{
     min-height: calc(100vh - 81px);
-} */
+}

@@ -1,0 +1,26 @@
+<div
+  class="space-y-1 border rounded-sm overflow-hidden cursor-pointer"
+  (click)="toShop(currentProduct.name)"
+>
+  <div class="w-[340px] md:w-[360px] h-[460px] relative">
+    <div class="absolute top-3 left-3 bg-white px-6 py-2 font-semibold">
+      25% OFF
+    </div>
+    <img
+      [src]="currentProduct.imagePath"
+      [alt]="currentProduct.name"
+      class="w-full h-full object-cover"
+    />
+  </div>
+  <div class="p-2 px-4">
+    <h1 class="font-semibold text-[18px] pt-2">{{ currentProduct.name }}</h1>
+    <div class="flex gap-2">
+      <span class="opacity-75">{{ currentProduct.brand }}</span>
+      <div>
+        <i class="bi bi-star-fill text-yellow-400"></i>
+        {{ currentProduct.rating }}
+      </div>
+    </div>
+    <ins>Rs 1500</ins>{{ " " }}<del class="text-[14px] opacity-75">Rs 2000</del>
+  </div>
+</div>

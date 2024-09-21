@@ -1,0 +1,187 @@
+<div class="w-[1200px] max-w-full mx-auto px-4 min-height">
+  <div class="my-5 text-[14px] opacity-70">
+    <a routerLink="/">Home</a> > Cart
+  </div>
+  <h1 class="text-[20px] md:text-[24px] font-bold">Cart</h1>
+
+  <div
+    class="absolute top-24 right-4 border-2 border-green-500 w-[300px] p-3 rounded-md bg-green-50 transition ease-in-out z-50"
+    [ngClass]="{
+      'scale-100 opacity-100': itemRemoved,
+      'scale-0 opacity-0': !itemRemoved
+    }"
+  >
+    <span class="opacity-75 text-green-600"> Item Removed Successfully! </span>
+  </div>
+  <div
+    class="absolute top-24 right-4 border-2 border-green-500 w-[300px] p-3 rounded-md bg-green-50 transition ease-in-out z-50"
+    [ngClass]="{
+      'scale-100 opacity-100': itemAdded,
+      'scale-0 opacity-0': !itemAdded
+    }"
+  >
+    <span class="opacity-75 text-green-600">
+      Added To Wishlist Successfully!
+    </span>
+  </div>
+  <div
+    *ngIf="cartProducts.length === 0"
+    class="min-h-[600px] text-center flex items-center justify-center flex-col gap-5 -translate-y-20"
+  >
+    <img
+      src="../../../assets/online-shopping.png"
+      alt=""
+      class="w-[150px] md:w-[200px]"
+    />
+    <div class="space-y-5">
+      <div class="text-center text-[18px] font-semibold opacity-60">
+        Looks like your cart is empty. Click
+        <a routerLink="/shop" class="underline text-purple-900 mx-1"> here </a>
+        to add Items.
+      </div>
+    </div>
+  </div>
+  <div
+    class="flex justify-between gap-3 flex-col md:flex-row md:mb-5"
+    *ngIf="cartProducts.length > 0"
+  >
+    <div class="flex flex-col gap-4 flex-1">
+      <!-- <div
+        class="flex justify-between items-center gap-2 flex-col sm-600:flex-row"
+      >
+        <div class="flex gap-1 md:gap-2 font-semibold items-center">
+          <input
+            type="checkbox"
+            name="all"
+            id="all"
+            class="w-[18px] h-[18px]"
+          />
+          <span class="text-[14px] sm-500:text-base"
+            >{{ selectedItems }}/{{ cartProducts.length }} ITEMS SELECTED</span
+          >
+        </div>
+
+        <div
+          class="flex gap-2 font-semibold text-[14px] sm-500:text-base opacity-60 md:opacity-95 border p-2 rounded-md md:border-none md:p-0"
+        >
+          <span class="cursor-pointer">REMOVE</span>
+          |
+          <span class="cursor-pointer">MOVE TO WISHLIST</span>
+        </div>
+      </div> -->
+      <!-- <hr /> -->
+      <div
+        class="border rounded-md flex justify-between gap-2 p-3"
+        *ngFor="let item of cartProducts; let id = index"
+      >
+        <div class="flex gap-2">
+          <div class="w-[112px] h-[148px] bg-slate-200 relative">
+            <img
+              [src]="item.imagePath"
+              [alt]="item.name"
+              class="w-full h-full object-contain"
+            />
+          </div>
+          <div class="md:h-[148px] flex flex-col gap-2 md:gap-5">
+            <div class="space-y-1">
+              <h1 class="text-base md:text-[18px]">{{ item.name }}</h1>
+              <h3 class="opacity-60 text-[14px]">Brand: {{ item.brand }}</h3>
+            </div>
+            <div class="flex gap-3 flex-col-reverse md:flex-row">
+              <div
+                class="bg-slate-100 px-3 py-1 text-[12px] md:text-base self-start"
+              >
+                Size: {{ item.size }}
+              </div>
+              <div
+                class="bg-slate-100 px-3 py-1 text-[12px] md:text-base cursor-pointer self-start"
+                (click)="moveToWishlist(item)"
+              >
+                {{
+                  checkWishList(item.name) === true
+                    ? "Remove From Wishlist"
+                    : "Add To Wishlist"
+                }}
+              </div>
+            </div>
+            <span class="space-x-1 md:space-x-2 text-[20px]">
+              <span class="text-base" *ngIf="item.discountedPrice > 0"
+                >Rs {{ item.discountedPrice }}</span
+              >
+              <del
+                class="opacity-60 text-[14px]"
+                *ngIf="item.discountedPrice > 0"
+              >
+                Rs {{ item.standardPrice }}</del
+              >
+              <span *ngIf="item.discountedPrice <= 0"
+                >Rs {{ item.standardPrice }}</span
+              >
+              <span
+                class="text-[#3e9674] text-[14px] md:text-[18px]"
+                *ngIf="item.discountedPrice > 0"
+                >({{ item.discountPercent }})</span
+              >
+            </span>
+          </div>
+        </div>
+        <div
+          class="text-gray-300 text-[24px] cursor-pointer self-start"
+          (click)="removeItem(item, id)"
+        >
+          &times;
+        </div>
+      </div>
+      <div
+        class="flex items-center justify-center my-3"
+        *ngIf="cartProducts.length > 0"
+      >
+        <button
+          class="bg-[#1b2834] text-white w-[300px] rounded-md flex md:hidden items-center justify-center"
+        >
+          <a routerLink="/shop" class="block py-3 flex-1"> Add More Items </a>
+        </button>
+      </div>
+    </div>
+    <div
+      class="md:border-l min-w-[300px] md:pl-4 md-1100:w-[420px] space-y-3 md:sticky md:top-[83px] pb-5 md:pb-0"
+    >
+      <div class="text-base font-semibold">
+        PRICE DETAILS ({{ cartProducts.length }}
+        {{ cartProducts.length > 1 ? "Items" : "Item" }})
+      </div>
+      <div class="flex items-center justify-between gap-2">
+        <span class="opacity-75">Standard Amount</span>
+        <span>Rs. {{ totalStandardPrice }}</span>
+      </div>
+      <div class="flex items-center justify-between gap-2">
+        <span class="opacity-75">Discount</span>
+        <span>-Rs. {{ discountedPrice }}</span>
+      </div>
+      <div class="flex items-center justify-between gap-2">
+        <span class="opacity-75">Shipping Fee</span>
+        <span>Free</span>
+      </div>
+      <hr />
+      <div class="flex items-center justify-between gap-2 font-bold">
+        <span>Total Amount</span>
+        <span>Rs. {{ totalStandardPrice - discountedPrice }}</span>
+      </div>
+      <div class="flex">
+        <button
+          class="bg-[#1b2834] text-white flex-1 py-3 rounded-md font-semibold"
+        >
+          PLACE ORDER
+        </button>
+      </div>
+    </div>
+  </div>
+  <div
+    class="md:flex items-center justify-center my-3 hidden"
+    *ngIf="cartProducts.length > 0"
+  >
+    <button class="bg-[#1b2834] text-white w-[300px] rounded-md">
+      <a routerLink="/shop" class="block py-3"> Add More Items </a>
+    </button>
+  </div>
+</div>

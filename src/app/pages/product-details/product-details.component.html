@@ -1,0 +1,241 @@
+<div
+  class="absolute top-24 right-4 border-2 border-green-500 w-[300px] p-3 rounded-md bg-green-50 transition ease-in-out z-50"
+  [ngClass]="{
+    'scale-100 opacity-100': itemAdded,
+    'scale-0 opacity-0': !itemAdded
+  }"
+>
+  <span class="opacity-75 text-green-600"> Item Added Successfully! </span>
+</div>
+<div
+  class="absolute top-24 right-4 border-2 border-green-500 w-[300px] p-3 rounded-md bg-green-50 transition ease-in-out z-50"
+  [ngClass]="{
+    'scale-100 opacity-100': witemRemoved,
+    'scale-0 opacity-0': !witemRemoved
+  }"
+>
+  <span class="opacity-75 text-green-600"> Item Removed Successfully! </span>
+</div>
+<div class="w-[1200px] max-w-full mx-auto px-4">
+  <div class="my-5 text-[14px] opacity-70">
+    <a routerLink="/">Home</a> > <a routerLink="/shop">Shop</a> >
+    {{ productName }}
+  </div>
+  <div
+    class="flex justify-center md-1100:justify-between gap-3 py-4 flex-col md-1100:flex-row"
+  >
+    <div
+      class="md-1100:basis-[50%] flex flex-wrap-reverse md-1100:flex-nowrap gap-2 items-center justify-center md-1100:self-start"
+    >
+      <div class="flex flex-row md:flex-col gap-3">
+        <div
+          class="w-[83px] h-[126px] bg-gray-50 rounded-md overflow-hidden cursor-pointer"
+          (click)="currentImage = currentProduct[0].imagePath"
+        >
+          <img
+            [src]="currentProduct[0].imagePath"
+            alt=""
+            class="w-full h-full object-cover"
+          />
+        </div>
+        <div
+          class="w-[83px] h-[126px] bg-gray-100 rounded-md overflow-hidden cursor-pointer"
+          (click)="currentImage = '../../../assets/coming-soon.png'"
+        >
+          <img
+            src="../../../assets/coming-soon.png"
+            alt=""
+            class="w-full h-full object-cover"
+          />
+        </div>
+        <div
+          class="w-[83px] h-[126px] bg-gray-100 rounded-md overflow-hidden cursor-pointer"
+          (click)="
+            currentImage =
+              'https://ih1.redbubble.net/image.3401394866.6979/flat,750x,075,f-pad,750x1000,f8f8f8.jpg'
+          "
+        >
+          <img
+            src="https://ih1.redbubble.net/image.3401394866.6979/flat,750x,075,f-pad,750x1000,f8f8f8.jpg"
+            alt=""
+            class="w-full h-full object-cover"
+          />
+        </div>
+      </div>
+      <div
+        class="w-[453px] h-[570px] bg-gray-100 rounded-md overflow-hidden cursor-pointer"
+      >
+        <img [src]="currentImage" alt="" class="w-full h-full object-contain" />
+      </div>
+    </div>
+    <div class="md-1100:basis-[50%] flex flex-col">
+      <h1 class="text-[20px] md:text-[24px] font-semibold">
+        {{ currentProduct[0].name }}
+      </h1>
+      <p class="opacity-70 py-2">{{ currentProduct[0].description }}</p>
+      <span class="space-x-2 text-[20px] md:text-[24px] py-3">
+        <span *ngIf="currentProduct[0].discountedPrice > 0"
+          >Rs {{ currentProduct[0].discountedPrice }}</span
+        >
+        <del
+          *ngIf="currentProduct[0].discountedPrice > 0"
+          class="opacity-60 text-base md:text-[20px]"
+          >Rs {{ currentProduct[0].standardPrice }}</del
+        >
+        <span *ngIf="currentProduct[0].discountedPrice <= 0"
+          >Rs {{ currentProduct[0].standardPrice }}</span
+        >
+        <span
+          class="text-[#3e9674]"
+          *ngIf="currentProduct[0].discountedPrice > 0"
+          >({{ currentProduct[0].discountPercent }})</span
+        >
+      </span>
+      <div class="text-[18px] font-semibold uppercase">Select Size</div>
+      <div class="flex gap-3 py-2">
+        <div
+          class="w-[40px] h-[40px] border flex items-center justify-center rounded-full cursor-pointer"
+          [ngClass]="{
+            ' border-black': selectedSize === 1,
+            ' border-gray-200': selectedSize !== 1
+          }"
+          (click)="selectedSize = 1"
+        >
+          XS
+        </div>
+        <div
+          class="w-[40px] h-[40px] border flex items-center justify-center rounded-full cursor-pointer"
+          [ngClass]="{
+            ' border-black': selectedSize === 2,
+            ' border-gray-200': selectedSize !== 2
+          }"
+          (click)="selectedSize = 2"
+        >
+          S
+        </div>
+        <div
+          class="w-[40px] h-[40px] border flex items-center justify-center rounded-full cursor-pointer"
+          [ngClass]="{
+            ' border-black': selectedSize === 3,
+            ' border-gray-200': selectedSize !== 3
+          }"
+          (click)="selectedSize = 3"
+        >
+          M
+        </div>
+        <div
+          class="w-[40px] h-[40px] border flex items-center justify-center rounded-full cursor-pointer"
+          [ngClass]="{
+            ' border-black': selectedSize === 4,
+            ' border-gray-200': selectedSize !== 4
+          }"
+          (click)="selectedSize = 4"
+        >
+          L
+        </div>
+        <div
+          class="w-[40px] h-[40px] border flex items-center justify-center rounded-full cursor-pointer"
+          [ngClass]="{
+            ' border-black': selectedSize === 5,
+            ' border-gray-200': selectedSize !== 5
+          }"
+          (click)="selectedSize = 5"
+        >
+          XL
+        </div>
+      </div>
+      <div class="flex gap-2 my-5">
+        <button
+          class="bg-[#1b2834] text-white flex-1 max-w-[420px]"
+          (click)="addOrRemove(currentProduct[0].name)"
+        >
+          ADD TO CART
+        </button>
+        <button
+          class="flex gap-2 min-w-[150px] border border-[#1b2834] py-2 items-center justify-center"
+          (click)="moveToWishlist(currentProduct[0])"
+        >
+          <i
+            *ngIf="checkWishList(currentProduct[0].name)"
+            class="bi bi-heart-fill"
+          ></i>
+          <i
+            *ngIf="!checkWishList(currentProduct[0].name)"
+            class="bi bi-heart"
+          ></i>
+          WISHLIST
+        </button>
+      </div>
+      <hr />
+      <div class="my-2">
+        <h1 class="text-[18px] font-semibold md:text-[20px] my-3">
+          Product Details
+        </h1>
+        <p class="opacity-60">{{ currentProduct[0].details }}</p>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="relatedProducts.length > 0">
+    <h1 class="text-[20px] md:text-[24px] font-semibold">Related Products</h1>
+    <div
+      class="flex-1 grid grid-cols-1 sm-600:grid-cols-2 md:grid-cols-2 justify-items-center md-1100:grid-cols-3 gap-3 my-5"
+    >
+      <div
+        class="w-[273px] relative cursor-pointer"
+        *ngFor="let item of relatedProducts"
+        (click)="viewProduct(item.name)"
+      >
+        <div
+          class="absolute top-2 left-2 border p-2 bg-white text-[14px] font-semibold"
+          *ngIf="item.discountedPrice > 0"
+        >
+          {{ item.discountPercent }}
+        </div>
+        <div
+          class="absolute top-0 right-0 border py-2 px-3 bg-white rounded-bl-lg"
+          *ngIf="checkWishList(item.name)"
+        >
+          <i class="bi bi-heart-fill text-xl text-[#1b2834]"></i>
+        </div>
+        <div
+          class="absolute top-0 right-0 border py-2 px-3 bg-white rounded-bl-lg"
+          *ngIf="!checkWishList(item.name)"
+        >
+          <i class="bi bi-heart text-xl"></i>
+        </div>
+        <div class="w-[273px] h-[340px] bg-gray-50">
+          <img
+            [src]="
+              item.imagePath ||
+              'https://lh5.googleusercontent.com/proxy/t08n2HuxPfw8OpbutGWjekHAgxfPFv-pZZ5_-uTfhEGK8B5Lp-VN4VjrdxKtr8acgJA93S14m9NdELzjafFfy13b68pQ7zzDiAmn4Xg8LvsTw1jogn_7wStYeOx7ojx5h63Gliw'
+            "
+            alt="Shopping"
+            class="w-full h-full object-cover"
+          />
+        </div>
+        <h1 class="mt-1">{{ item.name }}</h1>
+        <span class="space-x-2 text-[14px]"
+          ><span>{{ item.brand }}</span>
+          <span
+            ><i class="bi bi-star-fill text-yellow-300"></i>
+            {{ item.rating }}</span
+          ></span
+        >
+        <div class="flex items-center gap-2" *ngIf="item.discountedPrice > 0">
+          <ins class="text-[18px] font-semibold"
+            >Rs. {{ item.discountedPrice }}</ins
+          >
+          <del class="text-[14px]">Rs. {{ item.standardPrice }}</del>
+          <span class="font-semibold text-green-500">{{
+            item.discountPercent
+          }}</span>
+        </div>
+        <div class="flex items-center gap-2" *ngIf="item.discountedPrice <= 0">
+          <span class="text-[18px] font-semibold"
+            >Rs. {{ item.standardPrice }}</span
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,585 @@
+<div class="w-[1200px] max-w-full mx-auto px-4">
+  <div class="my-5 text-[14px] opacity-70">
+    <a routerLink="/">Home</a> > Shop
+  </div>
+  <i
+    class="bi bi-list block md-900:hidden text-2xl cursor-pointer"
+    (click)="toggleShowSideBar()"
+  ></i>
+  <div class="mb-2 flex flex-wrap gap-2 md-1200:ml-[255px] items-center">
+    <span
+      class="px-2 py-1 border rounded-md flex gap-2 items-center text-[14px] opacity-70"
+      *ngIf="category !== ''"
+      >{{ category }}
+      <span
+        class="text-xl cursor-pointer"
+        (click)="category = ''; filterProducts()"
+        >&times;</span
+      ></span
+    >
+    <span
+      class="px-2 py-1 border rounded-md flex gap-2 items-center text-[14px] opacity-70"
+      *ngFor="let item of brands"
+      >{{ item }}
+      <span
+        class="text-xl cursor-pointer"
+        (click)="removeBrand(item); filterProducts()"
+        >&times;</span
+      ></span
+    >
+    <span
+      class="opacity-70 cursor-pointer"
+      *ngIf="category !== '' || brands.length > 0"
+      (click)="clearAll(); filterProducts()"
+      >Clear All</span
+    >
+  </div>
+  <div class="flex justify-between gap-4 mb-10 min-h-screen">
+    <!-- For Screens smaller than 900 px -->
+    <div
+      class="w-[241px] bg-white block shadow md-900:hidden fixed top-[83px] left-0 height overflow-auto pt-5 pb-5 px-2 z-50 transition ease-in-out"
+      *ngIf="showSideBar"
+    >
+      <div
+        class="absolute right-1 px-2 py-1 bg-secondary rounded-full top-5 cursor-pointer"
+        (click)="showSideBar = false"
+      >
+        <i class="bi bi-chevron-left font-bold text-white"></i>
+      </div>
+      <h1 class="font-semibold text-[18px] py-2 border-b">Filters</h1>
+      <div
+        class="flex items-center justify-between cursor-pointer"
+        (click)="showAll = !showAll"
+      >
+        <h1 class="font-semibold py-3">Category</h1>
+        <i
+          class="bi bi-chevron-down transition ease-in-out duration-300 cursor-pointer"
+          [ngClass]="{ 'rotate-180': showAll, 'rotate-0': !showAll }"
+        ></i>
+      </div>
+      <ul class="space-y-3 ml-2" *ngIf="showAll === true">
+        <li class="space-y-2">
+          <div
+            class="flex items-center justify-between font-bold opacity-70 cursor-pointer"
+            (click)="showMen = !showMen"
+          >
+            Men<i
+              class="bi bi-chevron-down cursor-pointer"
+              [ngClass]="{ 'rotate-180': showMen, 'rotate-0': !showMen }"
+            ></i>
+          </div>
+          <ul class="ml-2 space-y-2 opacity-65" *ngIf="showMen">
+            <li
+              (click)="category = 'T-Shirts & Polos'; filterProducts()"
+              class="cursor-pointer"
+            >
+              T-Shirts & Polos
+            </li>
+            <li
+              (click)="category = 'Jeans & Trousers'; filterProducts()"
+              class="cursor-pointer"
+            >
+              Jeans & Trousers
+            </li>
+            <li
+              (click)="category = 'Hoodies & Sweatshirts'; filterProducts()"
+              class="cursor-pointer"
+            >
+              Hoodies & Sweatshirts
+            </li>
+            <li
+              (click)="category = 'Suits & Blazers'; filterProducts()"
+              class="cursor-pointer"
+            >
+              Suits & Blazers
+            </li>
+          </ul>
+        </li>
+        <li class="space-y-2">
+          <div
+            class="flex items-center justify-between font-bold opacity-70 cursor-pointer"
+            (click)="showWomen = !showWomen"
+          >
+            Women<i
+              class="bi bi-chevron-down cursor-pointer"
+              [ngClass]="{ 'rotate-180': showWomen, 'rotate-0': !showWomen }"
+            ></i>
+          </div>
+          <ul class="ml-2 space-y-2 opacity-65" *ngIf="showWomen">
+            <li
+              class="cursor-pointer"
+              (click)="category = 'Dresses'; filterProducts()"
+            >
+              Dresses
+            </li>
+            <li
+              class="cursor-pointer"
+              (click)="category = 'Tops & Blouses'; filterProducts()"
+            >
+              Tops & Blouses
+            </li>
+            <li
+              class="cursor-pointer"
+              (click)="category = 'Outerwear & Jackets'; filterProducts()"
+            >
+              Outerwear & Jackets
+            </li>
+          </ul>
+        </li>
+        <li class="space-y-2">
+          <div
+            class="flex items-center justify-between font-bold opacity-70 cursor-pointer"
+            (click)="showKids = !showKids"
+          >
+            Kids Clothing<i
+              class="bi bi-chevron-down cursor-pointer"
+              [ngClass]="{ 'rotate-180': showKids, 'rotate-0': !showKids }"
+            ></i>
+          </div>
+          <ul class="ml-2 space-y-2 opacity-65" *ngIf="showKids">
+            <li
+              class="cursor-pointer"
+              (click)="category = 'Boys Clothing'; filterProducts()"
+            >
+              Boys' Clothing
+            </li>
+            <li
+              class="cursor-pointer"
+              (click)="category = 'Girls Clothing'; filterProducts()"
+            >
+              Girls' Clothing
+            </li>
+            <li
+              class="cursor-pointer"
+              (click)="category = 'Baby & Toddler Outfits'; filterProducts()"
+            >
+              Baby & Toddler Outfits
+            </li>
+          </ul>
+        </li>
+        <li class="space-y-2">
+          <div
+            class="flex items-center justify-between font-bold opacity-70 cursor-pointer"
+            (click)="showAccessories = !showAccessories"
+          >
+            Accessories<i
+              class="bi bi-chevron-down cursor-pointer"
+              [ngClass]="{
+                'rotate-180': showAccessories,
+                'rotate-0': !showAccessories
+              }"
+            ></i>
+          </div>
+          <ul class="ml-2 space-y-2 opacity-65" *ngIf="showAccessories">
+            <li
+              class="cursor-pointer"
+              (click)="category = 'Bags & Purses'; filterProducts()"
+            >
+              Bags & Purses
+            </li>
+            <li
+              class="cursor-pointer"
+              (click)="category = 'Belts'; filterProducts()"
+            >
+              Belts
+            </li>
+            <li
+              class="cursor-pointer"
+              (click)="category = 'Hats & Caps'; filterProducts()"
+            >
+              Hats & Caps
+            </li>
+            <li
+              class="cursor-pointer"
+              (click)="category = 'Sunglasses'; filterProducts()"
+            >
+              Sunglasses
+            </li>
+          </ul>
+        </li>
+      </ul>
+      <div
+        class="flex items-center justify-between cursor-pointer border-t"
+        (click)="showAllBrands = !showAllBrands"
+      >
+        <h1 class="font-semibold py-3">Brands</h1>
+        <i
+          class="bi bi-chevron-down transition ease-in-out duration-300 cursor-pointer"
+          [ngClass]="{
+            'rotate-180': showAllBrands,
+            'rotate-0': !showAllBrands
+          }"
+        ></i>
+      </div>
+      <div class="space-y-2" *ngIf="showAllBrands">
+        <div class="flex items-center gap-2">
+          <input
+            type="checkbox"
+            class="cursor-pointer"
+            [checked]="brands.includes('Zara')"
+            (click)="addBrand('Zara'); filterProducts()"
+          />
+          <span class="opacity-70">Zara</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <input
+            type="checkbox"
+            class="cursor-pointer"
+            [checked]="brands.includes('Jockey')"
+            (click)="addBrand('Jockey'); filterProducts()"
+          />
+          <span class="opacity-70">Jockey</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <input
+            type="checkbox"
+            class="cursor-pointer"
+            [checked]="brands.includes('H&M')"
+            (click)="addBrand('H&M'); filterProducts()"
+          />
+          <span class="opacity-70">H&M</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <input
+            type="checkbox"
+            class="cursor-pointer"
+            [checked]="brands.includes('Calvin Klein')"
+            (click)="addBrand('Calvin Klein'); filterProducts()"
+          />
+          <span class="opacity-70">Calvin Klein</span>
+        </div>
+      </div>
+      <div
+        class="flex items-center justify-between cursor-pointer border-t"
+        (click)="showPriceRange = !showPriceRange"
+      >
+        <h1 class="font-semibold py-3">Price Range</h1>
+        <i
+          class="bi bi-chevron-down transition ease-in-out duration-300 cursor-pointer"
+          [ngClass]="{
+            'rotate-180': showPriceRange,
+            'rotate-0': !showPriceRange
+          }"
+        ></i>
+      </div>
+      <div class="space-y-2" *ngIf="showPriceRange">
+        <div class="flex items-center gap-2">
+          <input type="radio" class="cursor-pointer" name="price" />
+          <span class="opacity-70"> Less than 500</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <input type="radio" class="cursor-pointer" name="price" />
+          <span class="opacity-70"> Less than 1000</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <input type="radio" class="cursor-pointer" name="price" />
+          <span class="opacity-70">Less than 2000</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <input type="radio" class="cursor-pointer" name="price" />
+          <span class="opacity-70">Greater than 2000</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- For screens larger than 900px -->
+    <div
+      class="w-[200px] md-1200:w-[241px] bg-white hidden md-900:block sticky top-20 height overflow-auto pb-5 pr-2"
+    >
+      <h1 class="font-semibold text-[18px] py-2 border-b">Filters</h1>
+      <div
+        class="flex items-center justify-between cursor-pointer"
+        (click)="showAll = !showAll"
+      >
+        <h1 class="font-semibold py-3">Category</h1>
+        <i
+          class="bi bi-chevron-down transition ease-in-out duration-300 cursor-pointer"
+          [ngClass]="{ 'rotate-180': showAll, 'rotate-0': !showAll }"
+        ></i>
+      </div>
+      <ul class="space-y-3 ml-2" *ngIf="showAll === true">
+        <li class="space-y-2">
+          <div
+            class="flex items-center justify-between font-bold opacity-70 cursor-pointer"
+            (click)="showMen = !showMen"
+          >
+            Men<i
+              class="bi bi-chevron-down cursor-pointer"
+              [ngClass]="{ 'rotate-180': showMen, 'rotate-0': !showMen }"
+            ></i>
+          </div>
+          <ul class="ml-2 space-y-2 opacity-65" *ngIf="showMen">
+            <li
+              (click)="category = 'T-Shirts & Polos'; filterProducts()"
+              class="cursor-pointer"
+            >
+              T-Shirts & Polos
+            </li>
+            <li
+              (click)="category = 'Jeans & Trousers'; filterProducts()"
+              class="cursor-pointer"
+            >
+              Jeans & Trousers
+            </li>
+            <li
+              (click)="category = 'Hoodies & Sweatshirts'; filterProducts()"
+              class="cursor-pointer"
+            >
+              Hoodies & Sweatshirts
+            </li>
+            <li
+              (click)="category = 'Suits & Blazers'; filterProducts()"
+              class="cursor-pointer"
+            >
+              Suits & Blazers
+            </li>
+          </ul>
+        </li>
+        <li class="space-y-2">
+          <div
+            class="flex items-center justify-between font-bold opacity-70 cursor-pointer"
+            (click)="showWomen = !showWomen"
+          >
+            Women<i
+              class="bi bi-chevron-down cursor-pointer"
+              [ngClass]="{ 'rotate-180': showWomen, 'rotate-0': !showWomen }"
+            ></i>
+          </div>
+          <ul class="ml-2 space-y-2 opacity-65" *ngIf="showWomen">
+            <li
+              class="cursor-pointer"
+              (click)="category = 'Dresses'; filterProducts()"
+            >
+              Dresses
+            </li>
+            <li
+              class="cursor-pointer"
+              (click)="category = 'Tops & Blouses'; filterProducts()"
+            >
+              Tops & Blouses
+            </li>
+            <li
+              class="cursor-pointer"
+              (click)="category = 'Outerwear & Jackets'; filterProducts()"
+            >
+              Outerwear & Jackets
+            </li>
+          </ul>
+        </li>
+        <li class="space-y-2">
+          <div
+            class="flex items-center justify-between font-bold opacity-70 cursor-pointer"
+            (click)="showKids = !showKids"
+          >
+            Kids Clothing<i
+              class="bi bi-chevron-down cursor-pointer"
+              [ngClass]="{ 'rotate-180': showKids, 'rotate-0': !showKids }"
+            ></i>
+          </div>
+          <ul class="ml-2 space-y-2 opacity-65" *ngIf="showKids">
+            <li
+              class="cursor-pointer"
+              (click)="category = 'Boys Clothing'; filterProducts()"
+            >
+              Boys' Clothing
+            </li>
+            <li
+              class="cursor-pointer"
+              (click)="category = 'Girls Clothing'; filterProducts()"
+            >
+              Girls' Clothing
+            </li>
+            <li
+              class="cursor-pointer"
+              (click)="category = 'Baby & Toddler Outfits'; filterProducts()"
+            >
+              Baby & Toddler Outfits
+            </li>
+          </ul>
+        </li>
+        <li class="space-y-2">
+          <div
+            class="flex items-center justify-between font-bold opacity-70 cursor-pointer"
+            (click)="showAccessories = !showAccessories"
+          >
+            Accessories<i
+              class="bi bi-chevron-down cursor-pointer"
+              [ngClass]="{
+                'rotate-180': showAccessories,
+                'rotate-0': !showAccessories
+              }"
+            ></i>
+          </div>
+          <ul class="ml-2 space-y-2 opacity-65" *ngIf="showAccessories">
+            <li
+              class="cursor-pointer"
+              (click)="category = 'Bags & Purses'; filterProducts()"
+            >
+              Bags & Purses
+            </li>
+            <li
+              class="cursor-pointer"
+              (click)="category = 'Belts'; filterProducts()"
+            >
+              Belts
+            </li>
+            <li
+              class="cursor-pointer"
+              (click)="category = 'Hats & Caps'; filterProducts()"
+            >
+              Hats & Caps
+            </li>
+            <li
+              class="cursor-pointer"
+              (click)="category = 'Sunglasses'; filterProducts()"
+            >
+              Sunglasses
+            </li>
+          </ul>
+        </li>
+      </ul>
+      <div
+        class="flex items-center justify-between cursor-pointer border-t"
+        (click)="showAllBrands = !showAllBrands"
+      >
+        <h1 class="font-semibold py-3">Brands</h1>
+        <i
+          class="bi bi-chevron-down transition ease-in-out duration-300 cursor-pointer"
+          [ngClass]="{
+            'rotate-180': showAllBrands,
+            'rotate-0': !showAllBrands
+          }"
+        ></i>
+      </div>
+      <div class="space-y-2" *ngIf="showAllBrands">
+        <div class="flex items-center gap-2">
+          <input
+            type="checkbox"
+            class="cursor-pointer"
+            [checked]="brands.includes('Zara')"
+            (click)="addBrand('Zara'); filterProducts()"
+          />
+          <span class="opacity-70">Zara</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <input
+            type="checkbox"
+            class="cursor-pointer"
+            [checked]="brands.includes('Jockey')"
+            (click)="addBrand('Jockey'); filterProducts()"
+          />
+          <span class="opacity-70">Jockey</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <input
+            type="checkbox"
+            class="cursor-pointer"
+            [checked]="brands.includes('H&M')"
+            (click)="addBrand('H&M'); filterProducts()"
+          />
+          <span class="opacity-70">H&M</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <input
+            type="checkbox"
+            class="cursor-pointer"
+            [checked]="brands.includes('Calvin Klein')"
+            (click)="addBrand('Calvin Klein'); filterProducts()"
+          />
+          <span class="opacity-70">Calvin Klein</span>
+        </div>
+      </div>
+      <div
+        class="flex items-center justify-between cursor-pointer border-t"
+        (click)="showPriceRange = !showPriceRange"
+      >
+        <h1 class="font-semibold py-3">Price Range</h1>
+        <i
+          class="bi bi-chevron-down transition ease-in-out duration-300 cursor-pointer"
+          [ngClass]="{
+            'rotate-180': showPriceRange,
+            'rotate-0': !showPriceRange
+          }"
+        ></i>
+      </div>
+      <div class="space-y-2" *ngIf="showPriceRange">
+        <div class="flex items-center gap-2">
+          <input type="radio" class="cursor-pointer" name="price" />
+          <span class="opacity-70"> Less than 500</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <input type="radio" class="cursor-pointer" name="price" />
+          <span class="opacity-70"> Less than 1000</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <input type="radio" class="cursor-pointer" name="price" />
+          <span class="opacity-70">Less than 2000</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <input type="radio" class="cursor-pointer" name="price" />
+          <span class="opacity-70">Greater than 2000</span>
+        </div>
+      </div>
+    </div>
+    <div
+      class="flex-1 grid grid-cols-1 sm-600:grid-cols-2 md:grid-cols-2 justify-items-center md-1100:grid-cols-3 gap-3"
+    >
+      <div
+        class="w-[273px] relative cursor-pointer"
+        *ngFor="let item of allProducts"
+        (click)="viewProduct(item.name)"
+      >
+        <div
+          class="absolute top-2 left-2 border p-2 bg-white text-[14px] font-semibold"
+          *ngIf="item.discountedPrice > 0"
+        >
+          {{ item.discountPercent }}
+        </div>
+        <div
+          class="absolute top-0 right-0 border py-2 px-3 bg-white rounded-bl-lg"
+          *ngIf="checkWishList(item.name)"
+        >
+          <i class="bi bi-heart-fill text-xl text-[#1b2834]"></i>
+        </div>
+        <div
+          class="absolute top-0 right-0 border py-2 px-3 bg-white rounded-bl-lg"
+          *ngIf="!checkWishList(item.name)"
+        >
+          <i class="bi bi-heart text-xl"></i>
+        </div>
+        <div class="w-[273px] h-[340px] bg-gray-50">
+          <img
+            [src]="
+              item.imagePath ||
+              'https://lh5.googleusercontent.com/proxy/t08n2HuxPfw8OpbutGWjekHAgxfPFv-pZZ5_-uTfhEGK8B5Lp-VN4VjrdxKtr8acgJA93S14m9NdELzjafFfy13b68pQ7zzDiAmn4Xg8LvsTw1jogn_7wStYeOx7ojx5h63Gliw'
+            "
+            alt="Shopping"
+            class="w-full h-full object-cover"
+          />
+        </div>
+        <h1 class="mt-1">{{ item.name }}</h1>
+        <span class="space-x-2 text-[14px]"
+          ><span>{{ item.brand }}</span>
+          <span
+            ><i class="bi bi-star-fill text-yellow-300"></i>
+            {{ item.rating }}</span
+          ></span
+        >
+        <div class="flex items-center gap-2" *ngIf="item.discountedPrice > 0">
+          <ins class="text-[18px] font-semibold"
+            >Rs. {{ item.discountedPrice }}</ins
+          >
+          <del class="text-[14px]">Rs. {{ item.standardPrice }}</del>
+          <span class="font-semibold text-green-500">{{
+            item.discountPercent
+          }}</span>
+        </div>
+        <div class="flex items-center gap-2" *ngIf="item.discountedPrice <= 0">
+          <span class="text-[18px] font-semibold"
+            >Rs. {{ item.standardPrice }}</span
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
