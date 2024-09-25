@@ -1,5 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ElementRef,
+  ViewChild,
+  AfterViewInit,
+} from '@angular/core';
 import { Router } from '@angular/router';
+import { gsap } from 'gsap';
 import { ProductService } from '../../Services/products.service';
 
 @Component({
@@ -7,11 +14,12 @@ import { ProductService } from '../../Services/products.service';
   templateUrl: './landing-page.component.html',
   styleUrl: './landing-page.component.css',
 })
-export class LandingPageComponent implements OnInit {
+export class LandingPageComponent implements OnInit, AfterViewInit {
   mostSelling;
   mostSellingFiltered;
   dealsOfDay;
   cat = '';
+  @ViewChild('fadeInElement', { static: false }) fadeInElement!: ElementRef;
   constructor(private router: Router, private productService: ProductService) {
     scrollTo(0, 0);
   }
@@ -27,6 +35,29 @@ export class LandingPageComponent implements OnInit {
     this.dealsOfDay = this.productService.products.filter(
       (item) => item.discountPercent === '30% off'
     );
+  }
+
+  ngAfterViewInit(): void {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            // GSAP animation to fade in when element is in view
+            gsap.from(this.fadeInElement.nativeElement, {
+              opacity: 0,
+              duration: 2,
+              ease: 'power2.inOut',
+            });
+            observer.unobserve(this.fadeInElement.nativeElement); // Stop observing after animation runs
+          }
+        });
+      },
+      {
+        threshold: 0.2, // Trigger when 20% of the element is visible
+      }
+    );
+
+    observer.observe(this.fadeInElement.nativeElement);
   }
 
   filterProduct() {

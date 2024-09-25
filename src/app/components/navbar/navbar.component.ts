@@ -26,4 +26,7 @@ export class NavbarComponent {
     this.router.navigate(['wishlist']);
     this.showUser = false;
   }
+  toOrders() {
+    this.router.navigate(['myOrders']);
+  }
 }

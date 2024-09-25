@@ -5,7 +5,7 @@
   <h1 class="text-[20px] md:text-[24px] font-bold">Cart</h1>
 
   <div
-    class="absolute top-24 right-4 border-2 border-green-500 w-[300px] p-3 rounded-md bg-green-50 transition ease-in-out z-50"
+    class="fixed top-24 right-4 border-2 border-green-500 w-[300px] p-3 rounded-md bg-green-50 transition ease-in-out z-50"
     [ngClass]="{
       'scale-100 opacity-100': itemRemoved,
       'scale-0 opacity-0': !itemRemoved
@@ -14,7 +14,7 @@
     <span class="opacity-75 text-green-600"> Item Removed Successfully! </span>
   </div>
   <div
-    class="absolute top-24 right-4 border-2 border-green-500 w-[300px] p-3 rounded-md bg-green-50 transition ease-in-out z-50"
+    class="fixed top-24 right-4 border-2 border-green-500 w-[300px] p-3 rounded-md bg-green-50 transition ease-in-out z-50"
     [ngClass]="{
       'scale-100 opacity-100': itemAdded,
       'scale-0 opacity-0': !itemAdded
@@ -75,7 +75,10 @@
         *ngFor="let item of cartProducts; let id = index"
       >
         <div class="flex gap-2">
-          <div class="w-[112px] h-[148px] bg-slate-200 relative">
+          <div
+            class="w-[112px] h-[148px] bg-slate-200 relative cursor-pointer"
+            (click)="toItem(item.name)"
+          >
             <img
               [src]="item.imagePath"
               [alt]="item.name"
@@ -170,6 +173,7 @@
       <div class="flex">
         <button
           class="bg-[#1b2834] text-white flex-1 py-3 rounded-md font-semibold"
+          (click)="placeOrder()"
         >
           PLACE ORDER
         </button>

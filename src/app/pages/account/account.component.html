@@ -1,0 +1,107 @@
+<div class="w-[1200px] max-w-full mx-auto px-4">
+  <div class="my-5 text-[14px] opacity-70">
+    <a routerLink="/">Home</a> > <span>My Account</span>
+  </div>
+  <h1 class="text-[20px] md:text-[24px] font-bold mb-4">My Account</h1>
+  <form
+    class="md:w-[80%] mx-auto space-y-4 mb-5"
+    [formGroup]="account"
+    (ngSubmit)="submitForm()"
+  >
+    <div class="relative my-5">
+      <div class="w-[130px] h-[130px] rounded-full bg-gray-200 overflow-hidden">
+        <input
+          type="file"
+          class="hidden"
+          id="profile"
+          formControlName="imagePath"
+          (change)="handleImageChange($event)"
+        />
+        <label
+          class="bi bi-pencil-square absolute bottom-0 left-[90px] text-[18px] bg-blue-500 text-white py-1 px-2 rounded-full cursor-pointer"
+          for="profile"
+        ></label>
+        <img
+          [src]="
+            selectedImage ||
+            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRbyHZ4yjBXpnnG01YecWfbRFKuukNxlmYE4wRGg5I0jaj6StK0BLJ2SaQ-jcUXT_dAlmo&usqp=CAU'
+          "
+          alt="Profile"
+          class="w-full h-full object-cover overflow-hidden"
+        />
+      </div>
+    </div>
+    <div class="flex flex-wrap items-center justify-between gap-5">
+      <div class="flex flex-col gap-2 flex-1">
+        <label for="f_name" class="text-[18px] font-semibold"
+          >First Name <span class="text-red-600">*</span></label
+        >
+        <input
+          type="text"
+          class="p-2 border rounded-md"
+          formControlName="f_name"
+          name="f_name"
+          id="f_name"
+        />
+      </div>
+      <div class="flex flex-col gap-2 flex-1">
+        <label for="l_name" class="text-[18px] font-semibold"
+          >Last Name <span class="text-red-600">*</span></label
+        >
+        <input
+          type="text"
+          class="p-2 border rounded-md"
+          formControlName="l_name"
+          name="l_name"
+          id="l_name"
+        />
+      </div>
+    </div>
+    <div class="flex flex-col gap-2 flex-1">
+      <label for="email" class="text-[18px] font-semibold"
+        >Email <span class="text-red-600">*</span></label
+      >
+      <input
+        type="text"
+        class="p-2 border rounded-md"
+        formControlName="email"
+        name="email"
+        id="email"
+      />
+    </div>
+    <div class="flex flex-wrap items-center justify-between gap-2 md:gap-5">
+      <div class="flex flex-col gap-2 flex-1">
+        <label for="phone" class="text-[18px] font-semibold"
+          >Phone <span class="text-red-600">*</span></label
+        >
+        <input
+          type="number"
+          class="p-2 border rounded-md"
+          name="number"
+          formControlName="phone"
+          id="number"
+        />
+      </div>
+      <div class="flex flex-col gap-2 flex-1">
+        <label for="l_name" class="text-[18px] font-semibold"
+          >Gender<span class="text-red-600">*</span></label
+        >
+        <select
+          name="gender"
+          id="gender"
+          class="p-2 border rounded-md"
+          formControlName="gender"
+        >
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+        </select>
+      </div>
+    </div>
+    <button
+      type="submit"
+      class="bg-[#1b2834] w-[150px] py-2 rounded-md text-white"
+    >
+      Update
+    </button>
+  </form>
+</div>

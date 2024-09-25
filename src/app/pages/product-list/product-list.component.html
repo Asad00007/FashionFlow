@@ -28,6 +28,17 @@
       ></span
     >
     <span
+      class="px-2 py-1 border rounded-md flex gap-2 items-center text-[14px] opacity-70"
+      *ngIf="minPrice > 0 || maxPrice > 0"
+      >{{ minPrice }} <span *ngIf="maxPrice > 0"> {{ -maxPrice }}</span>
+      <span *ngIf="maxPrice === 0"> &lt;</span>
+      <span
+        class="text-xl cursor-pointer"
+        (click)="minPrice = 0; maxPrice = 0; filterProducts()"
+        >&times;</span
+      ></span
+    >
+    <span
       class="opacity-70 cursor-pointer"
       *ngIf="category !== '' || brands.length > 0"
       (click)="clearAll(); filterProducts()"
@@ -263,22 +274,34 @@
         ></i>
       </div>
       <div class="space-y-2" *ngIf="showPriceRange">
-        <div class="flex items-center gap-2">
-          <input type="radio" class="cursor-pointer" name="price" />
-          <span class="opacity-70"> Less than 500</span>
+        <div class="flex flex-col gap-2">
+          <label for="min">Minimum Price</label>
+          <input
+            type="number"
+            class="border p-1"
+            max="3999"
+            name="minPrice"
+            [(ngModel)]="minPrice"
+            (change)="filterProducts()"
+          />
         </div>
-        <div class="flex items-center gap-2">
-          <input type="radio" class="cursor-pointer" name="price" />
-          <span class="opacity-70"> Less than 1000</span>
+        <div class="flex flex-col gap-2">
+          <label for="max">Maximum Price</label>
+          <input
+            type="number"
+            class="border p-1"
+            max="3999"
+            name="maxPrice"
+            [(ngModel)]="maxPrice"
+            (change)="filterProducts()"
+          />
         </div>
-        <div class="flex items-center gap-2">
-          <input type="radio" class="cursor-pointer" name="price" />
-          <span class="opacity-70">Less than 2000</span>
-        </div>
-        <div class="flex items-center gap-2">
-          <input type="radio" class="cursor-pointer" name="price" />
-          <span class="opacity-70">Greater than 2000</span>
-        </div>
+        <!-- <button
+          class="bg-[#1b2834] text-white p-2 rounded-md"
+          (click)="filterProducts(); showSideBar = !showSideBar"
+        >
+          Search
+        </button> -->
       </div>
     </div>
 
@@ -503,22 +526,34 @@
         ></i>
       </div>
       <div class="space-y-2" *ngIf="showPriceRange">
-        <div class="flex items-center gap-2">
-          <input type="radio" class="cursor-pointer" name="price" />
-          <span class="opacity-70"> Less than 500</span>
+        <div class="flex flex-col gap-2">
+          <label for="min">Minimum Price</label>
+          <input
+            type="number"
+            class="border p-1"
+            max="3999"
+            name="minPrice"
+            [(ngModel)]="minPrice"
+            (change)="filterProducts()"
+          />
         </div>
-        <div class="flex items-center gap-2">
-          <input type="radio" class="cursor-pointer" name="price" />
-          <span class="opacity-70"> Less than 1000</span>
+        <div class="flex flex-col gap-2">
+          <label for="max">Maximum Price</label>
+          <input
+            type="number"
+            class="border p-1"
+            max="3999"
+            name="maxPrice"
+            [(ngModel)]="maxPrice"
+            (change)="filterProducts()"
+          />
         </div>
-        <div class="flex items-center gap-2">
-          <input type="radio" class="cursor-pointer" name="price" />
-          <span class="opacity-70">Less than 2000</span>
-        </div>
-        <div class="flex items-center gap-2">
-          <input type="radio" class="cursor-pointer" name="price" />
-          <span class="opacity-70">Greater than 2000</span>
-        </div>
+        <!-- <button
+          class="bg-[#1b2834] text-white p-2 rounded-md"
+          (click)="filterProducts(); showSideBar = !showSideBar"
+        >
+          Search
+        </button> -->
       </div>
     </div>
     <div

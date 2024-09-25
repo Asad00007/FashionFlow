@@ -1,5 +1,5 @@
 <div
-  class="absolute top-24 right-4 border-2 border-green-500 w-[300px] p-3 rounded-md bg-green-50 transition ease-in-out z-50"
+  class="fixed top-24 right-4 border-2 border-green-500 w-[300px] p-3 rounded-md bg-green-50 transition ease-in-out z-50"
   [ngClass]="{
     'scale-100 opacity-100': itemAdded,
     'scale-0 opacity-0': !itemAdded
@@ -8,7 +8,7 @@
   <span class="opacity-75 text-green-600"> Item Added Successfully! </span>
 </div>
 <div
-  class="absolute top-24 right-4 border-2 border-green-500 w-[300px] p-3 rounded-md bg-green-50 transition ease-in-out z-50"
+  class="fixed top-24 right-4 border-2 border-green-500 w-[300px] p-3 rounded-md bg-green-50 transition ease-in-out z-50"
   [ngClass]="{
     'scale-100 opacity-100': witemRemoved,
     'scale-0 opacity-0': !witemRemoved

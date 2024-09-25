@@ -19,6 +19,8 @@ export class ProductListComponent implements OnInit {
   category = '';
   brands: any[] = [];
   priceRange = '';
+  minPrice = 0;
+  maxPrice = 0;
   constructor(private productService: ProductService, private router: Router) {
     scrollTo(0, 0);
   }
@@ -61,22 +63,77 @@ export class ProductListComponent implements OnInit {
   clearAll() {
     this.category = '';
     this.brands = [];
+    this.minPrice = 0;
+    this.maxPrice = 0;
   }
 
   filterProducts() {
     this.allProducts = this.productService.products.filter((item) => {
-      if (this.category !== '' && this.brands.length > 0) {
-        return (
-          item.subCategory === this?.category &&
-          this.brands.includes(item.brand)
-        );
-      } else if (this.category !== '' && this.brands.length === 0) {
-        return item.subCategory === this?.category;
-      } else if (this.category === '' && this.brands.length > 0) {
-        return this.brands.includes(item.brand);
-      } else {
-        return true;
-      }
+      // if (this.category !== '' && this.brands.length > 0) {
+      //   return (
+      //     item.subCategory === this?.category &&
+      //     this.brands.includes(item.brand)
+      //   );
+      // } else if (this.category !== '' && this.brands.length === 0) {
+      //   return item.subCategory === this?.category;
+      // } else if (this.category === '' && this.brands.length > 0) {
+      //   return this.brands.includes(item.brand);
+      // } else if (
+      //   this.category !== '' &&
+      //   this.brands.length > 0 &&
+      //   (this.minPrice > 0 || this.maxPrice > 0)
+      // ) {
+      //   return (
+      //     item.subCategory === this?.category &&
+      //     this.brands.includes(item.brand) &&
+      //     item.standardPrice >= this.minPrice &&
+      //     item.standardPrice <= this.maxPrice
+      //   );
+      // } else if (
+      //   this.category === '' &&
+      //   this.brands.length > 0 &&
+      //   (this.minPrice > 0 || this.maxPrice > 0)
+      // ) {
+      //   return (
+      //     this.brands.includes(item.brand) &&
+      //     item.standardPrice >= this.minPrice &&
+      //     item.standardPrice <= this.maxPrice
+      //   );
+      // } else if (
+      //   this.category !== '' &&
+      //   this.brands.length === 0 &&
+      //   (this.minPrice > 0 || this.maxPrice > 0)
+      // ) {
+      //   return (
+      //     item.subCategory === this?.category &&
+      //     item.standardPrice >= this.minPrice &&
+      //     item.standardPrice <= this.maxPrice
+      //   );
+      // } else if (
+      //   this.category === '' &&
+      //   this.brands.length === 0 &&
+      //   (this.minPrice > 0 || this.maxPrice > 0)
+      // ) {
+      //   return (
+      //     item.standardPrice >= this.minPrice &&
+      //     item.standardPrice <= this.maxPrice
+      //   );
+      // } else {
+      //   return true;
+      // }
+      const matchesCategory = this.category
+        ? item.subCategory === this.category
+        : true;
+      const matchesBrand = this.brands.length
+        ? this.brands.includes(item.brand)
+        : true;
+      const matchesPrice =
+        this.minPrice || this.maxPrice
+          ? item.standardPrice >= (this.minPrice || 0) &&
+            item.standardPrice <= (this.maxPrice || 3000)
+          : true;
+
+      return matchesCategory && matchesBrand && matchesPrice;
     });
   }
 }

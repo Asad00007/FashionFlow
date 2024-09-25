@@ -45,7 +45,6 @@ export class ProductDetailsComponent implements OnInit {
         item.name !== this.productName
       );
     });
-    console.log(this.relatedProducts);
   }
   addOrRemove(name: string) {
     if (this.selectedSize === 1) {
@@ -97,7 +96,6 @@ export class ProductDetailsComponent implements OnInit {
       }, 1000);
       this.checkWishList(item.name);
     }
-    console.log(this.productService.wishListItems);
   }
 
   viewProduct(name) {

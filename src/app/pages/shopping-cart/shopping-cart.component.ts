@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../../Services/products.service';
 import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-shopping-cart',
@@ -14,8 +15,9 @@ export class ShoppingCartComponent implements OnInit {
   selectedProducts: any[] = [];
   itemRemoved = false;
   itemAdded = false;
+  orderedItems: any[] = [];
 
-  constructor(private productService: ProductService) {
+  constructor(private productService: ProductService, private router: Router) {
     window.scrollTo(0, 0);
   }
 
@@ -27,7 +29,6 @@ export class ShoppingCartComponent implements OnInit {
       this.totalStandardPrice =
         this.totalStandardPrice + this.cartProducts[i].standardPrice;
     }
-    console.log(this.totalStandardPrice);
 
     for (let i = 0; i < this.cartProducts.length; i++) {
       if (this.cartProducts[i].discountedPrice > 0) {
@@ -57,6 +58,35 @@ export class ShoppingCartComponent implements OnInit {
       this.itemRemoved = false;
     }, 1000);
   }
+
+  placeOrder() {
+    alert('Order Placed Successfully');
+    const date = new Date().toLocaleString('en-US', {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+    });
+
+    const storedItems = localStorage.getItem('Orders');
+    this.orderedItems = storedItems ? JSON.parse(storedItems) : [];
+
+    const newItems = this.cartProducts.map((product) => ({
+      ...product,
+      orderDate: date,
+    }));
+
+    this.orderedItems = [...this.orderedItems, ...newItems];
+
+    localStorage.setItem('Orders', JSON.stringify(this.orderedItems));
+
+    this.cartProducts = [];
+    this.productService.selectedProducts = [];
+    this.productService.productChanged.emit();
+    this.router.navigate(['/myOrders']);
+    // localStorage.clear();
+  }
   moveToWishlist(item) {
     const isInWishlist = this.productService.wishListItems.some(
       (wItem) => wItem.name === item.name
@@ -79,7 +109,6 @@ export class ShoppingCartComponent implements OnInit {
       }, 1000);
       this.checkWishList(item.name);
     }
-    console.log(this.productService.wishListItems);
   }
 
   checkWishList(name) {
@@ -87,5 +116,9 @@ export class ShoppingCartComponent implements OnInit {
       return items.name === name;
     });
     return res;
+  }
+
+  toItem(name: string) {
+    this.router.navigate(['/shop', name]);
   }
 }
